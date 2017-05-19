@@ -1,0 +1,33 @@
+miniJava Grammar
+
+Program  ::=  (ClassDeclaration)* eot
+ClassDeclaration  ::=  class id { ( Visibility  Access  ((Type id (( ParameterList? ) {Statement*} | ; ) ) | void id ( ParameterList? ) {Statement*} ))* } 
+Visibility ::= ( public | private )? Access ::=  (static)?
+Type ::=  boolean | ( int | id ) ([])?
+ParameterList ::= Type id ( , Type id )* ArgumentList ::= Expression ( , Expression )*
+Reference ::= (id ( [ Expression ] )? | this) (. id ( [ Expression ] )?)*
+Statement ::=
+   {  (  Statement)* }
+| Type id = Expression ;
+|  Reference (( (ArgumentList)? ) | = Expression) ;
+|  return (Expression)? ;
+| if ( Expression ) Statement (else Statement)?
+| while ( Expression ) Statement
+Expression ::=
+(Reference (( ArgumentList? ))?
+|  unop Expression
+| ( Expression )
+|  num |  true | false
+| new ( int [ Expression ] | id  ([ Expression ] | () ))) (binop Expression)*
+
+
+
+
+Precedence
+E -> 	A( || A)*
+A -> 	B( && B)*
+B ->	C( ( == | !=) C)*
+C -> 	D((<= | < | > | >=) D)*
+D ->	F(( + | -) F)*
+F ->	G((/ | *)) G)*
+G ->	(( - | !) G) | (num | true | false | ( E ) | null | new ( int [ Expression ] | id ([ Expression ] | () )) | (id ( [ Expression ] )? | this) (. id ( [ Expression ] )?)* (( ArgumentList? ))?)
