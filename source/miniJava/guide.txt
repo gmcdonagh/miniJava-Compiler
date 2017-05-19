@@ -1,0 +1,31 @@
+Scope of my project:
+
+
+
+	I have implemented the compiler as specified by pa1 - pa4 and have opted not to attempt any of the extra credit functionality specified in pa5.
+
+
+
+Summary of changes to AST classes:
+
+
+
+	A number of changes were made to the AST classes to accommodate pa3 requirements. To implement null, a concrete class extending Terminal called NullLiteral was made. 'null' was thus also added to the list of keywords and a Token of kind NULL is formed whenever the string 'null' is found during parsing. Thus, every appearance of null in the AST is as a LiteralExpression containing a NullLiteral containing a Token of type NULL.
+
+	A new abstract class extending TypeDenoter called OperatorType was also added. Extending this is a number of concrete classes, one for each specific operator. These all share the lists binaryOperand1, binaryOperand2, binaryResult, unaryOperand, and unaryResult. The members of these lists are specific to each operator and are put into the lists during construction. These members specify which operand types are allowable for each operator and, if allowable, what resultant type would be created from the operation. These classes are utilized during expression type checking.
+
+	SourcePosition was also finally created during pa3. Both tokens and AST nodes have a source position so 3 integers are shared by every 	SourcePosition object - lineNum, lineStart, and lineFinish. A singular token will have the same number for all three integers specifying its line in the program. AST nodes can span multiple lines and thus use the lineNums from their constituent nodes/tokens to create a lineStart and lineFinish which may be the same or may be different. A node's lineNum is always 0 as it is never used, unlike tokens. The toString method for SourcePosition outputs a string of the form  'lineStart - lineFinish' and is used in Contextual Analysis error messages.
+
+	The Visitor class was updated to account for NullLiteral and SourcePosition, but not any of the OperatorTypes as they are not found in the AST and are only used for type checking.
+
+	Identification, type checking, and code generation are all implemented as standard visitors, all with their own unique variables and helper methods to accommodate their specific functions. For instance, IdentifyingVisitor has a variable of class type IdentificationTable which has a stack of hashmaps and its own methods to alter that stack and TypeCheckingVisitor has a helper method typeCompare which decides if two types given to it are the same in a standard context. Further, EmittingVisitor makes use of the abstract class RuntimeEntity through its concrete classes UnnknownValue and KnownValue, though KnownValue is not used in this implementation. It also does one large patch at the end of the program to fix any method calls.
+
+
+
+A description of tests:
+
+
+
+	Not applicable.
+
+
