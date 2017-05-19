@@ -2,23 +2,25 @@ miniJava Grammar
 
 Program  ::=  (ClassDeclaration)* eot
 ClassDeclaration  ::=  class id { ( Visibility  Access  ((Type id (( ParameterList? ) {Statement*} | ; ) ) | void id ( ParameterList? ) {Statement*} ))* } 
-Visibility ::= ( public | private )? Access ::=  (static)?
+Visibility ::= ( public | private )? 
+Access ::=  (static)?
 Type ::=  boolean | ( int | id ) ([])?
-ParameterList ::= Type id ( , Type id )* ArgumentList ::= Expression ( , Expression )*
+ParameterList ::= Type id ( , Type id )* 
+ArgumentList ::= Expression ( , Expression )*
 Reference ::= (id ( [ Expression ] )? | this) (. id ( [ Expression ] )?)*
 Statement ::=
    {  (  Statement)* }
-| Type id = Expression ;
-|  Reference (( (ArgumentList)? ) | = Expression) ;
-|  return (Expression)? ;
-| if ( Expression ) Statement (else Statement)?
-| while ( Expression ) Statement
+   | Type id = Expression ;
+   |  Reference (( (ArgumentList)? ) | = Expression) ;
+   |  return (Expression)? ;
+   | if ( Expression ) Statement (else Statement)?
+   | while ( Expression ) Statement
 Expression ::=
-(Reference (( ArgumentList? ))?
-|  unop Expression
-| ( Expression )
-|  num |  true | false
-| new ( int [ Expression ] | id  ([ Expression ] | () ))) (binop Expression)*
+   (Reference (( ArgumentList? ))?
+   |  unop Expression
+   | ( Expression )
+   |  num |  true | false
+   | new ( int [ Expression ] | id  ([ Expression ] | () ))) (binop Expression)*
 
 
 
